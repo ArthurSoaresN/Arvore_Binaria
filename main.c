@@ -30,8 +30,18 @@ No* criarNo (int key) {
 	return novo_no;
 	
 	}
+	
+// Percursos em Árvores Binárias
 
+// Pré-Ordem (Raiz -> Esquerda -> Direita)
 
+void PreOrdem(No* raiz){
+	if (raiz != NULL) {
+		printf("Chave: %d", raiz->key);
+		PreOrdem(raiz->No_Esquerdo);
+		PreOrdem(raiz->No_Direito);
+	}
+}
 
 
 
