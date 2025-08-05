@@ -13,7 +13,13 @@ typedef struct {
 
 // Função para criar um novo No
 
-No* criarNo (int key) {}
+// Tipo retorno -> No
+No* criarNo (int key) {
+	
+	No* novo_no = (No*)malloc(sizeof(No)); // Cast para malloc + size
+	
+	
+	}
 
 
 
