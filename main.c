@@ -69,6 +69,10 @@ void PosOrdem(No* raiz) {
 // vai para a sub arvore esquerda, caso maior vai para a sub arvore direita
 // se chegar em NULL, a chave não existe.
 
+// Usando ponteiro no argumento para mudar o valor da variável, e não
+// usar uma variável temporario do escopo da função.
+No* buscar_no(No* raiz)
+
 
 int main() {
 	
