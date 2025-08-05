@@ -43,6 +43,15 @@ void PreOrdem(No* raiz){
 	}
 }
 
+// Ordem Simetrica (Esquerda -> Raiz -> Direita)
+
+void OrdemSimetrica(No* raiz){
+	if(raiz != NULL){
+		OrdemSimetrica(raiz->No_Esquerdo); // Percorre a subarvore esquerda
+		printf("Chave: %d", raiz->key); // Processa a raiz
+		OrdemSimetrica(raiz->No_Direito); // Percorre a subarvore direita
+		}
+	}
 
 
 
