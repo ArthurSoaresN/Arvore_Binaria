@@ -11,6 +11,13 @@ typedef struct {
 	No* No_Direito;  // Ponteiro para o No Direito (Possibilita a compilação e serve de "caso base")
 } No;
 
+// Função para criar um novo No
+
+No* criarNo (int key) {}
+
+
+
+
 
 
 int main() {
