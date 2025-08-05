@@ -20,13 +20,14 @@ No* criarNo (int key) {
 	
 	if (novo_no == NULL) {
 		printf("Memory Error\n");
-		exit(1)
+		exit(1);
 	}
 	
-	novo_no->key = key
-	novo_no->No_Esquerdo = NULL // Um novo nó começa sem filhos
-	novo_no->No_Direito = NULL
+	novo_no->key = key;
+	novo_no->No_Esquerdo = NULL; // Um novo nó começa sem filhos
+	novo_no->No_Direito = NULL;
 	
+	return novo_no;
 	
 	}
 
