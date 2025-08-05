@@ -18,6 +18,15 @@ No* criarNo (int key) {
 	
 	No* novo_no = (No*)malloc(sizeof(No)); // Cast para malloc + size
 	
+	if (novo_no == NULL) {
+		printf("Memory Error\n");
+		exit(1)
+	}
+	
+	novo_no->key = key
+	novo_no->No_Esquerdo = NULL // Um novo nó começa sem filhos
+	novo_no->No_Direito = NULL
+	
 	
 	}
 
