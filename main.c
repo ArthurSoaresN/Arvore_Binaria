@@ -63,6 +63,12 @@ void PosOrdem(No* raiz) {
 	}
 }
 
+// Buscar No
+
+// Procurando uma chave: Começando pela raiz, se for igual achou, se for menor
+// vai para a sub arvore esquerda, caso maior vai para a sub arvore direita
+// se chegar em NULL, a chave não existe.
+
 
 int main() {
 	
