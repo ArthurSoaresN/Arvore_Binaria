@@ -7,8 +7,8 @@
 
 typedef struct {
 	int key;
-	No* No_Esquerdo;
-	No* No_Direito;
+	No* No_Esquerdo; // Ponteiro para o No Esquerdo (Guarda o endereço de memória de outro nó)
+	No* No_Direito;  // Ponteiro para o No Direito (Possibilita a compilação e serve de "caso base")
 } No;
 
 
