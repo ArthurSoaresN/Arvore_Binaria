@@ -71,8 +71,22 @@ void PosOrdem(No* raiz) {
 
 // Usando ponteiro no argumento para mudar o valor da variável, e não
 // usar uma variável temporario do escopo da função.
-No* buscar_no(No* raiz)
 
+// Raiz para pegar o inicio da arvore e a chave buscada.
+No* buscar_no(No* raiz, int key){
+	
+	if ((raiz == NULL)||(raiz->key == key)){
+		return raiz;
+		}
+	
+	if (key > raiz->key) {
+		return buscar_no(raiz->No_Direito, key);
+	}
+	
+	if (key < raiz->key) {
+		return buscar_no(raiz->No_Esquerdo, key)
+	}
+}
 
 int main() {
 	
