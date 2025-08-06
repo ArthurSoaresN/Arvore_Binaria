@@ -5,11 +5,14 @@
 // struct é para permitir a auto-referência de forma 
 // indireta e a alocação dinâmica de memória.
 
-typedef struct No {
+typedef struct No No;
+
+struct No {
 	int key;
 	No* No_Esquerdo; // Ponteiro para o No Esquerdo (Guarda o endereço de memória de outro nó)
 	No* No_Direito;  // Ponteiro para o No Direito (Possibilita a compilação e serve de "caso base")
-} No;
+	No* No_Pai;
+};
 
 // Função para criar um novo No
 
@@ -120,6 +123,11 @@ No* inserir(No* raiz, int key) {
 }
 
 int main() {
+	
+	
+	No* raiz = criarNo()
+	
+	
 	
 	return 0;
 }
