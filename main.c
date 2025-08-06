@@ -100,19 +100,19 @@ determinada subárvore.
  */
  
 // Função para inserir um nó em uma ABB
-No* inserir(No* raiz, int chave) {
+No* inserir(No* raiz, int key) {
     // Se a árvore está vazia, retorna um novo nó
     if (raiz == NULL) {
-        return criarNo(chave);
+        return criarNo(key);
     }
 
     // Se a chave a ser inserida é menor, insere na subárvore esquerda
-    if (chave < raiz->chave) {
-        raiz->esquerda = inserir(raiz->esquerda, chave);
+    if (key < raiz->key) {
+        raiz->No_Esquerdo = inserir(raiz->No_Esquerdo, key);
     } 
     // Se a chave a ser inserida é maior, insere na subárvore direita
-    else if (chave > raiz->chave) {
-        raiz->direita = inserir(raiz->direita, chave);
+    else if (key > raiz->key) {
+        raiz->No_Direito = inserir(raiz->No_Direito, chave);
     }
 
     // Retorna o ponteiro da raiz (sem alterações se a chave já existir)
