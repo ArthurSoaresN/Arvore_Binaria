@@ -88,6 +88,37 @@ No* buscar_no(No* raiz, int key){
 	}
 }
 
+/*
+ 
+Função Inserir
+Por que retornar um ponteiro No* também?
+Retornar um No* é uma técnica comum em C para lidar com modificações. 
+A função retorna o endereço da (possivelmente nova) raiz da subárvore 
+que ela acabou de processar. Isso é especialmente útil em árvores AVL, 
+onde uma rotação pode mudar completamente qual nó é a raiz de uma 
+determinada subárvore.
+ */
+ 
+// Função para inserir um nó em uma ABB
+No* inserir(No* raiz, int chave) {
+    // Se a árvore está vazia, retorna um novo nó
+    if (raiz == NULL) {
+        return criarNo(chave);
+    }
+
+    // Se a chave a ser inserida é menor, insere na subárvore esquerda
+    if (chave < raiz->chave) {
+        raiz->esquerda = inserir(raiz->esquerda, chave);
+    } 
+    // Se a chave a ser inserida é maior, insere na subárvore direita
+    else if (chave > raiz->chave) {
+        raiz->direita = inserir(raiz->direita, chave);
+    }
+
+    // Retorna o ponteiro da raiz (sem alterações se a chave já existir)
+    return raiz;
+}
+
 int main() {
 	
 	return 0;
