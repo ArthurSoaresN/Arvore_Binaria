@@ -130,10 +130,52 @@ No* inserir(No* raiz, int key) {
     return raiz;
 }
 
+void exibir_arvore(No* No_Pai)
+{
+	if(No_Pai != NULL)
+	{
+		if(No_Pai->No_Esquerdo != NULL && No_Pai->No_Direito != NULL)
+		{
+			printf("%d: %d %d ", No_Pai->key, No_Pai->No_Esquerdo->key, No_Pai->No_Direito->key);
+		}
+		else if (No_Pai->No_Esquerdo != NULL && No_Pai->No_Direito == NULL) 
+		{
+			printf("%d: %d - ", No_Pai->key, No_Pai->No_Esquerdo->key);
+		}
+		else if (No_Pai->No_Esquerdo == NULL && No_Pai->No_Direito != NULL)
+		{
+			printf("%d: - %d ", No_Pai->key, No_Pai->No_Direito->key);			
+		}
+		else
+		{
+			printf("%d: - - ", No_Pai->key);
+		}
+		
+		// Impressão do pai (ou "-" se for a raiz)
+		
+		if(No_Pai->->No_Pai != NULL)
+		{
+			printf("| %d\n", No_Pai->No_Pai->key);
+		}
+		else
+		{
+			printf("| -\n");
+		}
+		
+		// Exibir os filhos
+		exibir_arvore(No_Pai->No_Esquerdo);
+		exibir_arvore(No_Pai->No_Direito);
+	}
+}
+
+// CRIAR A RAIZ
+No* criar_arvore(int new_key)
+{
+	
+}
+
 int main() {
 	
-	
-	No* raiz = criarNo()
 	
 	
 	
