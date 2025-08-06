@@ -77,18 +77,26 @@ void PosOrdem(No* raiz) {
 
 // Raiz para pegar o inicio da arvore e a chave buscada.
 No* buscar_no(No* raiz, int key){
+	No* no_buscado = NULL;
 	
-	if ((raiz == NULL)||(raiz->key == key)){
-		return raiz;
+	if (raiz == NULL){
+		printf("Null\n");
 		}
-	
-	if (key > raiz->key) {
-		return buscar_no(raiz->No_Direito, key);
-	}
-	
-	if (key < raiz->key) {
-		return buscar_no(raiz->No_Esquerdo, key)
-	}
+		
+	else {
+			if(raiz->key == key) {
+			no_buscado = raiz;
+			}
+			
+			else if (key > raiz->key) {
+			no_buscado = buscar_no(raiz->No_Direito, key);
+			}
+			
+			else if (key < raiz->key) {
+			no_buscado = buscar_no(raiz->No_Esquerdo, key);
+			}
+		}
+	return no_buscado;
 }
 
 /*
