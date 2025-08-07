@@ -20,7 +20,15 @@
  O fb deve ser +1, 0 ou -1 para ser uma arvore balanceada.
  Nó com fb desbalanceado é o pivô e precisa ser balanceado.
  
- fb = altura da sub arvore esquerda - sub arvore direita
+ Balanço de um nó = (h_e + 1) - (h_d + 1)
+ 
+ h_e -> é a altura da subárvore esquerda daquele nó
+ h_d -> é a altura da subárvore direita daquele nó
+ 
+ A altura de um nó é o comprimento do caminho mais longo desse nó até uma folha
+ A altura de uma árvore vazia (um filho que não existe, ou seja, um ponteiro NULL) é convencionada como -1
+ Por definição, a altura de uma folha (um nó sem filhos) é 0
+ A altura de um nó que não é folha é calculada como: 1 + a maior altura entre seus filhos.
  
  
  */
