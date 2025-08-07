@@ -51,8 +51,23 @@ Quando o nó é adicionado 2x na esquerda.
   /
  C
  
- 
- 
+Rotação RL ou Rotação dupla à esquerda
+O nó é inserido na direita depois na esquerda
+> para balancear precisa fazer uma rotação LL e depois uma RR
+
+Rotação LR ou Rotação dupla à direita 
+O nó é inserido na esquerda depois na esquerda
+> para balancear precisar fazer uma rotação RR e depois LL
+
+Quando usar cada rotação?
+
+Cosiderando C filho do no B, e B filho do nó A
+se o fb for:
+
+A +2 e B +1 -> LL
+A -2 e B -1 -> RR
+A +2 e B -1 -> LR
+A -2 e B +1 -> RL
  
  
  */
