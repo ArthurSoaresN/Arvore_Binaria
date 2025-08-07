@@ -20,10 +20,6 @@
  O fb deve ser +1, 0 ou -1 para ser uma arvore balanceada.
  Nó com fb desbalanceado é o pivô e precisa ser balanceado.
  
- filhos a esquerda (+1)
- filhos a direita (-1)
- dois ou nenhum filho (0)
- 
  fb = altura da sub arvore esquerda - sub arvore direita
  
  
