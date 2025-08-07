@@ -30,6 +30,30 @@
  Por definição, a altura de uma folha (um nó sem filhos) é 0
  A altura de um nó que não é folha é calculada como: 1 + a maior altura entre seus filhos.
  
+  
+Rotação RR (RIGHT RIGHT)
+Quando o nó é inserido 2x na direita.
+> para balancear é necessário uma rotação simples à esquerda
+ 
+ A					 B
+  \					/ \
+   B		--->   A   C
+    \
+     C
+  
+Rotação LL (Left Left)
+Quando o nó é adicionado 2x na esquerda.
+> para balancear é necessário uma rotação simples à direita
+ 
+	 A			   B
+	/			  / \
+   B	   --->  A	 C
+  /
+ C
+ 
+ 
+ 
+ 
  
  */
 
