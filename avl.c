@@ -69,6 +69,12 @@ A -2 e B -1 -> RR
 A +2 e B -1 -> LR
 A -2 e B +1 -> RL
  
+As rotações são aplicadas no ancestral mais proximo do nó inserido cujo
+fb passa a ser +2 ou -2
+
+Esse é o parametro das funções implementadas.
+As rotações simples (LL e RR) atualizam as novas alturas das sub-arvores.
+As rotações duplas (LR e RL) podem ser implementadas com 2 rotações simples.
  
  */
 
