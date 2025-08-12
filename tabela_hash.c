@@ -10,6 +10,19 @@ void IniciarTabela(int tabela[]) {
 		}
 }
 
+int FunctionHash(int chave) {
+	return chave % TAMANHO;
+}
+
+void inserir(int tabela[], int valor){
+	int id = FunctionHash(valor);
+	while(tabela[id]) != 0) {
+		id = FunctionHash(id + 1);
+	}
+}
+
+
+
 int main()
 {
 	// M = 2 * numero de elementos -> Número primo mais próximo;
