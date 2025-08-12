@@ -6,8 +6,9 @@
 // Zera todos os indices da tabela
 void IniciarTabela(int tabela[]) {
 	for (int i = 0; i < TAMANHO; i++){
-			tabela[i] = 0
-		}
+		// Ponto 1: Faltava um ponto e vírgula aqui
+		tabela[i] = 0;
+	}
 }
 
 int FunctionHash(int chave) {
@@ -17,7 +18,8 @@ int FunctionHash(int chave) {
 void inserir(int tabela[], int valor){
 	int id = FunctionHash(valor);
 	
-	while(tabela[id]) != 0) {
+	// Ponto 2: Parêntese no lugar errado e operador de comparação incorreto
+	while(tabela[id] != 0) {
 		id = FunctionHash(id + 1);
 	}
 	tabela[id] = valor;
@@ -25,7 +27,8 @@ void inserir(int tabela[], int valor){
 
 int busca (int tabela[], int chave) {
 	int id = FunctionHash(chave);
-	while(tabela[id] = !0) {
+	// Ponto 3: O operador de comparação deve ser '!='
+	while(tabela[id] != 0) {
 		if(tabela[id] == chave){
 			return tabela[id];
 		}
@@ -33,15 +36,16 @@ int busca (int tabela[], int chave) {
 			id = FunctionHash(id + 1);
 		}
 	}
-	return 0
+	// Ponto 4: Faltava um ponto e vírgula aqui
+	return 0;
 }
 
 void ImprimirTabela(int tabela[]) {
 	for (int i = 0; i < TAMANHO; i++) {
-		printf("%d = d%\n", i, tabela[i]);
+		// Ponto 5: O formatador de string para o segundo valor deve ser '%d', não 'd%'
+		printf("%d = %d\n", i, tabela[i]);
 	}
 }
-
 
 int main()
 {
@@ -52,29 +56,36 @@ int main()
 	int valor;
 	int retorno;
 	
+	IniciarTabela(tabela);
+	
 	do{
-		printf("\n\t0 - Sairz\n\t1 - Inserir\n\t2 - Buscar\n\t3 - Imprimir\n");
+		// Ponto 6: Corrigido o erro de digitação "Sairz" para "Sair"
+		printf("\n\t0 - Sair\n\t1 - Inserir\n\t2 - Buscar\n\t3 - Imprimir\n");
 		scanf("%d", &opcao);
 		
 		switch(opcao){
 			case 1:
-				printf("Digite o valor que deseja inserir:\n)");
+				// Ponto 7: Parêntese fora das aspas removido
+				printf("Digite o valor que deseja inserir:\n");
 				scanf("%d", &valor);
 				inserir(tabela, valor);
 			case 2:
-				printf("Digite o valor que deseja buscar:\n)");
+				// Ponto 8: Parêntese fora das aspas removido
+				printf("Digite o valor que deseja buscar:\n");
 				scanf("%d", &valor);
 				retorno = busca(tabela, valor);
 				if(retorno != 0){
 					printf("Valor Encontrado: %d\n", retorno);
-				else(printf("Valor nao encontrado\n");
+				}
+				else {
+					printf("Valor nao encontrado\n");
+				}
 			case 3:
 				ImprimirTabela(tabela);
 			default:
 				printf("Opcao Invalida\n");
-			}
+		}
 	} while (opcao != 0);
 	
 	return 0;
 }
-
