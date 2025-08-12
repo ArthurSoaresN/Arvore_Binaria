@@ -16,12 +16,24 @@ int FunctionHash(int chave) {
 
 void inserir(int tabela[], int valor){
 	int id = FunctionHash(valor);
+	
 	while(tabela[id]) != 0) {
 		id = FunctionHash(id + 1);
 	}
+	tabela[id] = valor;
 }
 
-
+int busca (int tabela[], int chave) {
+	int id = FunctionHash(chave);
+	while(tabela[id] = !0) {
+		if(tabela[id] == chave){
+			return tabela[id];
+		}
+		else {
+			id = FunctionHash(id + 1);
+		}
+	}
+}
 
 int main()
 {
