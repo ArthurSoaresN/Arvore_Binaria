@@ -35,6 +35,13 @@ int busca (int tabela[], int chave) {
 	}
 }
 
+void ImprimirTabela(int tabela[]) {
+	for (int i = 0; i < TAMANHO; i++) {
+		printf("%d = d%\n", i, tabela[i]);
+	}
+}
+
+
 int main()
 {
 	// M = 2 * numero de elementos -> Número primo mais próximo;
