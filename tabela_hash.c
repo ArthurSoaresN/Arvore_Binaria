@@ -33,6 +33,7 @@ int busca (int tabela[], int chave) {
 			id = FunctionHash(id + 1);
 		}
 	}
+	return 0
 }
 
 void ImprimirTabela(int tabela[]) {
@@ -48,9 +49,30 @@ int main()
 	// 2*15 = 30 -> M = 31
 	int tabela[TAMANHO];
 	int opcao;
+	int valor;
+	int retorno;
 	
 	do{
-		printf
+		printf("\n\t0 - Sairz\n\t1 - Inserir\n\t2 - Buscar\n\t3 - Imprimir\n");
+		scanf("%d", &opcao);
+		
+		switch(opcao){
+			case 1:
+				printf("Digite o valor que deseja inserir:\n)");
+				scanf("%d", &valor);
+				inserir(tabela, valor);
+			case 2:
+				printf("Digite o valor que deseja buscar:\n)");
+				scanf("%d", &valor);
+				retorno = busca(tabela, valor);
+				if(retorno != 0){
+					printf("Valor Encontrado: %d\n", retorno);
+				else(printf("Valor nao encontrado\n");
+			case 3:
+				ImprimirTabela(tabela);
+			default:
+				printf("Opcao Invalida\n");
+			}
 	} while (opcao != 0);
 	
 	return 0;
