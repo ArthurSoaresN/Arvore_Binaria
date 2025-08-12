@@ -46,7 +46,12 @@ int main()
 {
 	// M = 2 * numero de elementos -> Número primo mais próximo;
 	// 2*15 = 30 -> M = 31
-	int tabela[TAMANHO]; 
+	int tabela[TAMANHO];
+	int opcao;
+	
+	do{
+		printf
+	} while (opcao != 0);
 	
 	return 0;
 }
