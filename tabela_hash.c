@@ -69,6 +69,7 @@ int main()
 				printf("Digite o valor que deseja inserir:\n");
 				scanf("%d", &valor);
 				inserir(tabela, valor);
+			    break;
 			case 2:
 				// Ponto 8: Parêntese fora das aspas removido
 				printf("Digite o valor que deseja buscar:\n");
@@ -80,8 +81,10 @@ int main()
 				else {
 					printf("Valor nao encontrado\n");
 				}
+			    break;
 			case 3:
 				ImprimirTabela(tabela);
+			    break;
 			default:
 				printf("Opcao Invalida\n");
 		}
