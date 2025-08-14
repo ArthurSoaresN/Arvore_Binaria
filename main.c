@@ -123,7 +123,7 @@ No* inserir(No* raiz, int key) {
     } 
     // Se a chave a ser inserida é maior, insere na subárvore direita
     else if (key > raiz->key) {
-        raiz->No_Direito = inserir(raiz->No_Direito, chave);
+        raiz->No_Direito = inserir(raiz->No_Direito, key);
     }
 
     // Retorna o ponteiro da raiz (sem alterações se a chave já existir)
@@ -153,7 +153,7 @@ void exibir_arvore(No* No_Pai)
 		
 		// Impressão do pai (ou "-" se for a raiz)
 		
-		if(No_Pai->->No_Pai != NULL)
+		if(No_Pai->No_Pai != NULL)
 		{
 			printf("| %d\n", No_Pai->No_Pai->key);
 		}
