@@ -62,8 +62,8 @@ void PosOrdem(No* raiz) {
 	if (raiz != NULL) {
 			PosOrdem(raiz->No_Esquerdo); // Percorre a subarvora esquerda
 			PosOrdem(raiz->No_Direito); // Percorre a subarvore direita
-			printf("Chave: %d", raiz->key) // Processa a raiz
-	}
+			printf("Chave: %d", raiz->key); // Processa a raiz
+		}
 }
 
 // Buscar No
