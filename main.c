@@ -238,6 +238,20 @@ int main() {
 
 	// Realizar os 3 tipos de percuso
 
+	PreOrdem(p_raiz);
+	printf("\n");
+	OrdemSimetrica(p_raiz);
+	printf("\n");
+	PosOrdem(p_raiz);
+
+	exibir_arvore(p_raiz);
+	printf("\n");
+
+	// Buscar
+
+	No* no_buscado = buscar_no(p_raiz, 16);
+	printf("%d\n", no_buscado->key);
+
 	return 0;
 }
 
