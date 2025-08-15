@@ -40,7 +40,7 @@ No* criarNo (int key) {
 
 void PreOrdem(No* raiz){
 	if (raiz != NULL) {
-		printf("Chave: %d", raiz->key);
+		printf("%d ", raiz->key);
 		PreOrdem(raiz->No_Esquerdo);
 		PreOrdem(raiz->No_Direito);
 	}
@@ -51,7 +51,7 @@ void PreOrdem(No* raiz){
 void OrdemSimetrica(No* raiz){
 	if(raiz != NULL){
 		OrdemSimetrica(raiz->No_Esquerdo); // Percorre a subarvore esquerda
-		printf("Chave: %d", raiz->key); // Processa a raiz
+		printf("%d ", raiz->key); // Processa a raiz
 		OrdemSimetrica(raiz->No_Direito); // Percorre a subarvore direita
 		}
 	}
@@ -243,6 +243,7 @@ int main() {
 	OrdemSimetrica(p_raiz);
 	printf("\n");
 	PosOrdem(p_raiz);
+	printf("\n");
 
 	exibir_arvore(p_raiz);
 	printf("\n");
