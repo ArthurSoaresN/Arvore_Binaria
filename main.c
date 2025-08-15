@@ -187,7 +187,7 @@ void inserir_em_arvore_nao_vazia(No* raiz, int new_key) {
 	else if (new_key == raiz->key) {
 		printf("Chave já existente");
 	}
-	else if (new_key < new_key) {
+	else if (new_key < raiz->key) {
 		// INSERÇÃO DEVE OCORRER A ESQUERDA
 		if(raiz->No_Esquerdo == NULL) {
 			// CRIAR NO 
