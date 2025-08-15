@@ -171,14 +171,73 @@ void exibir_arvore(No* No_Pai)
 // CRIAR A RAIZ
 No* criar_arvore(int new_key)
 {
-	
+	No* novo_no = (No*) malloc(sizeof(No));
+	novo_no->key = new_key;
+	novo_no->No_Esquerdo = NULL;
+	novo_no->No_Direito = NULL;
+	novo_no->No_Pai = NULL;
+	return novo_no;
+}
+
+void inserir_em_arvore_nao_vazia(No* raiz, int new_key) {
+
+	if (raiz == NULL) {
+		printf("Arvora nao esta vazia");
+	}
+	else if (new_key == raiz->key) {
+		printf("Chave já existente");
+	}
+	else if (new_key < new_key) {
+		// INSERÇÃO DEVE OCORRER A ESQUERDA
+		if(raiz->No_Esquerdo == NULL) {
+			// CRIAR NO 
+			No* novo_no  = (No*) malloc(sizeof(No));
+			novo_no->key = new_key;
+			novo_no->No_Esquerdo = NULL;
+			novo_no->No_Direito = NULL;
+			novo_no->No_Pai = raiz;
+			raiz->No_Esquerdo = novo_no;
+		}
+		else {
+			// Chamada recursiva para inserir nó na subarvore esquerda
+			inserir_em_arvore_nao_vazia(raiz->No_Esquerdo, new_key);
+		}
+	}
+	else{
+		//INSERÇÃO DEVE OCORRER A DIREITA
+		if(raiz->No_Direito == NULL){
+			No* novo_no = (No*) malloc(sizeof(No));
+			novo_no->No_Esquerdo = NULL;
+			novo_no->No_Direito = NULL;
+			raiz->No_Direito = novo_no;
+			novo_no->key = new_key;
+			novo_no->No_Pai = raiz;
+		}
+		else{
+			// Chamada recursiva para inserir no na subarvore direita
+			inserir_em_arvore_nao_vazia(raiz->No_Direito, new_key);
+		}
+	}	
 }
 
 int main() {
 	
+	// Criar raiz da arvore
+	No* p_raiz = criar_arvore(10);
 	
-	
-	
+	// Inserção de chavees
+
+	inserir_em_arvore_nao_vazia(p_raiz, 20);
+	inserir_em_arvore_nao_vazia(p_raiz, 17);
+	inserir_em_arvore_nao_vazia(p_raiz, 1);
+	inserir_em_arvore_nao_vazia(p_raiz, 8);
+	inserir_em_arvore_nao_vazia(p_raiz, 12);
+	inserir_em_arvore_nao_vazia(p_raiz, 14);
+	inserir_em_arvore_nao_vazia(p_raiz, 15);
+	inserir_em_arvore_nao_vazia(p_raiz, 16);
+
+	// Realizar os 3 tipos de percuso
+
 	return 0;
 }
 
