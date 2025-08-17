@@ -156,11 +156,28 @@ void ProcessarPosOrdem (No* p_raiz)
 		}
 }
 
-
-
-int CalcularAlturaDoNo(No* p_raiz, int chave)
+int AlturaNo(No* no)
 {
-	
+	if (no == NULL){
+		return -1;
+	}
+	else {
+		return no->altura;
+	}
+}
+
+int max(int HE, int HD) {
+	if (HE > HD) {
+		return HE;
+	}
+	else {
+		return HD;
+	}
+}
+
+int CalcularFatorBalanceamento(No* no)
+{
+	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
 }
 
 
