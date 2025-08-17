@@ -43,8 +43,12 @@
  
  Fator de Balanceamento de um Nó: É o resultado de um cálculo que usa as alturas 
  das duas subárvores filhas (h_e e h_d). Para a árvore ser considerada uma AVL, o 
-
-resultado desse cálculo deve, obrigatoriamente, ser -1, 0 ou 1.
+ resultado desse cálculo deve, obrigatoriamente, ser -1, 0 ou 1.
+ 
+ Exemplo: 
+ A altura da sua subárvore esquerda (nó 10) é h_e = 0.
+ A altura da sua subárvore direita (nó 40) é h_d = 2.
+ Fator de Balanceamento = (h_e + 1) - (h_d + 1) = (0 + 1) - (2 + 1) = 1 - 3 = -2.
  
   
 Rotação RR (RIGHT RIGHT)
