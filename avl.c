@@ -108,10 +108,44 @@ struct AVL_NO {
 	No* p_filho_direito;
 	int altura;
 	int fb;
-	}
+	};
+
+No* criar_arvore(No* p_raiz, int chave, int* p_verificador)
+{
+	if (p_verificador == 1) {
+		printf("Árvore já criada");
+		return NULL;
+		}
+	
+	else {
+		p_raiz->chave = chave;
+		p_raiz->p_filho_esquerdo = NULL;
+		p_raiz->p_filho_direito = NULL;
+		p_raiz->altura = 0; // altura(p) = 1+max(-1,-1) = 0
+		p_raiz->fb = 0; // fb = (h_e + 1) - (h_d + 1)
+		
+		p_verificador = 1; // Raiz Criada
+		return p_raiz;
+		}
+}
+
+int CalcularAlturaDoNo(No* p_raiz, int chave)
+{
+	
+}
+
+
+
+
+
+
 
 int main()
 {
+	int verificador = 0;
+	int* p_verificador = &verificador; 
+	
+	
 	
 	return 0;
 }
