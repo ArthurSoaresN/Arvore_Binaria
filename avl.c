@@ -22,6 +22,7 @@
  Nó com fb desbalanceado é o pivô e precisa ser balanceado.
  
  Balanço de um nó = (h_e + 1) - (h_d + 1)
+ Altura(P) = 1 + max(altura_subarvore_esquerda, altura_subarvore_direita)
  
  h_e -> é a altura da subárvore esquerda daquele nó
  h_d -> é a altura da subárvore direita daquele nó
