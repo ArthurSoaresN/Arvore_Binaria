@@ -180,7 +180,14 @@ int CalcularFatorBalanceamento(No* no)
 	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
 }
 
+// Quando o nó é inserido na sub-arvore direita 2x acaba desbalanceando a arvore porque a diferença
+// de altura em uma Arvore AVL é no máximo 1. Resolver com a rotação RR (Right Right)
 
+void RodarRR (No* no_desbalanceado)
+{
+	
+
+}
 
 
 
