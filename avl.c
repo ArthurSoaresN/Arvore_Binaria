@@ -129,6 +129,35 @@ No* criar_arvore(No* p_raiz, int chave, int* p_verificador)
 		}
 }
 
+void ProcessarPreOrdem (No* p_raiz)
+{
+	if (p_raiz != NULL) {
+		printf("%d ", p_raiz->chave);
+		ProcessarPreOrdem(p_raiz->p_filho_esquerdo);
+		ProcessarPreOrdem(p_raiz->p_filho_direito); 
+	}
+}
+
+void ProcessarOrdemSimetrica (No* p_raiz)
+{
+	if(p_raiz != NULL) {
+		ProcessarOrdemSimetrica(p_raiz->p_filho_esquerdo);
+		printf("%d ", p_raiz->chave);
+		ProcessarOrdemSimetrica(p_raiz->p_filho_direito);
+	}
+}
+
+void ProcessarPosOrdem (No* p_raiz) 
+{
+		if (p_raiz != NULL) {
+			ProcessarPosOrdem(p_raiz->p_filho_esquerdo);
+			ProcessarPosOrdem(p_raiz->p_filho_direito);
+			printf("%d ", p_raiz->chave);
+		}
+}
+
+
+
 int CalcularAlturaDoNo(No* p_raiz, int chave)
 {
 	
