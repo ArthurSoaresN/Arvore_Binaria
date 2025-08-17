@@ -16,6 +16,7 @@
  Fator de balanceamento ou fb:
  é a diferença nas alturas da sub-arvores esquerda e direita
  Se uma das sub-arvores não existir sua altura será -1.
+ (é considerado -1 para o cálculo da altura e do balanço do nó PAI.)
  
  O fb deve ser +1, 0 ou -1 para ser uma arvore balanceada.
  Nó com fb desbalanceado é o pivô e precisa ser balanceado.
