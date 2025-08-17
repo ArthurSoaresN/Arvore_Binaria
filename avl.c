@@ -27,10 +27,24 @@
  h_e -> é a altura da subárvore esquerda daquele nó
  h_d -> é a altura da subárvore direita daquele nó
  
+ No contexto da árvore, usamos a função max() para 
+ descobrir qual das duas subárvores (a da esquerda, 
+ com altura h_e, ou a da direita, com altura h_d)
+ é a mais alta. A mais alta é a que tem o maior valor de altura.
+ 
  A altura de um nó é o comprimento do caminho mais longo desse nó até uma folha
  A altura de uma árvore vazia (um filho que não existe, ou seja, um ponteiro NULL) é convencionada como -1
  Por definição, a altura de uma folha (um nó sem filhos) é 0
  A altura de um nó que não é folha é calculada como: 1 + a maior altura entre seus filhos.
+ 
+ Altura de um Nó: É o comprimento do caminho mais longo daquele nó até uma folha. 
+ A altura de um nó que existe pode ser 0, 1, 2, 3, 4, ..., ou seja, qualquer número 
+ inteiro não negativo. É muito comum que a altura seja diferente de -1, 0 ou 1.
+ 
+ Fator de Balanceamento de um Nó: É o resultado de um cálculo que usa as alturas 
+ das duas subárvores filhas (h_e e h_d). Para a árvore ser considerada uma AVL, o 
+
+resultado desse cálculo deve, obrigatoriamente, ser -1, 0 ou 1.
  
   
 Rotação RR (RIGHT RIGHT)
