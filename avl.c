@@ -49,6 +49,7 @@
  A altura da sua subárvore esquerda (nó 10) é h_e = 0.
  A altura da sua subárvore direita (nó 40) é h_d = 2.
  Fator de Balanceamento = (h_e + 1) - (h_d + 1) = (0 + 1) - (2 + 1) = 1 - 3 = -2.
+ Fator de Balanceamento -2 que torna o nó 20 "desregulado" e dispara a necessidade de rebalancear a árvore
  
   
 Rotação RR (RIGHT RIGHT)
@@ -97,6 +98,17 @@ As rotações simples (LL e RR) atualizam as novas alturas das sub-arvores.
 As rotações duplas (LR e RL) podem ser implementadas com 2 rotações simples.
  
  */
+ 
+typedef struct AVL_NO No;
+
+struct AVL_NO {
+	int chave;
+	No* p_pai;
+	No* p_filho_esquerdo;
+	No* p_filho_direito;
+	int altura;
+	int fb;
+	}
 
 int main()
 {
