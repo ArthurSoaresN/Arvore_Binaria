@@ -175,8 +175,12 @@ int max(int HE, int HD) {
 	}
 }
 
-int CalcularFatorBalanceamento(No* no)
+void CalcularFatorBalanceamento(No* no)
 {
+	if(no == NULL){
+		return NULL
+	}
+	
 	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
 }
 
@@ -185,8 +189,45 @@ int CalcularFatorBalanceamento(No* no)
 
 void RodarRR (No* no_desbalanceado)
 {
-	
+	if (no_desbalanceado != NULL) {
+		CalcularFatorBalanceamento(no_desbalanceado);
+		CalcularFatorBalanceamento(no_desbalanceado->p_filho_direito);
+		CalcularFatorBalanceamento(no_desbalanceado->p_filho_direito->p_filho_direito);
+		
+		if (no_desbalanceado->fb < no_desbalanceado->p_filho_direito && 
+			no_desbalanceado->p_filho_direito < no_desbalanceado->p_filho_direito->p_filho_direito) {
+				
+			no_desbalanceado->p_filho_direito->p_filho_esquerdo = no_desbalanceado;
+			no_desbalanceado->p_filho_direito->altura = 1;
+			no_desbalanceado->p_pai = no_desbalanceado->p_filho_direito;
+			no_desbalanceado->p_filho_direito = NULL;
+			no_desbalanceado->p_filho_esquerdo = NULL;
+			no_desbalanceado->altura = 0;
+		}
+	}
+}
 
+// Quando o nó é inserido na sub-arvore esquerda 2x acaba desbalanceando a arvore porque a diferença
+// de altura em uma Arvore AVL é no máximo 1. Resolver com a rotação LL (Left Left)
+
+void RodarLL (No* no_desbalanceado) 
+{
+	if (no_desbalanceado != NULL) {
+		CalcularFatorBalanceamento(no_desbalanceado);
+		CalcularFatorBalanceamento(no_desbalanceado->p_filho_esquerdo);
+		CalcularFatorBalanceamento(no_desbalanceado->p_filho_esquerdo->p_filho_);
+		
+		if (no_desbalanceado->fb > no_desbalanceado->p_filho_esquerdo && 
+			no_desbalanceado->p_filho_esquerdo > no_desbalanceado->p_filho_esquerdo->p_filho_esquerdo) {
+		
+			no_desbalanceado->p_filho_esquerdo->p_filho_direito = no_desbalanceado;
+			no_desbalanceado->p_filho_esquerdo->altura = 1;
+			no_desbalanceado->p_pai = no_desbalanceado->p_filho_esquerdo
+			no_desbalanceado->p_filho_direito = NULL;
+			no_desbalanceado->p_filho_esquerdo = NULL;
+			no_desbalanceado->altura = 0;
+		}
+	}
 }
 
 
