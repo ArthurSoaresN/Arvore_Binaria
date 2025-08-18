@@ -188,6 +188,8 @@ void CalcularFatorBalanceamento(No* no)
 		continue;
 	}
 	
+	CalcularAltura(no->p_filho_esquerdo);
+	CalcularAltura(no->p_filho_direito);
 	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
 }
 
@@ -262,11 +264,9 @@ void VerificarBalanceamento(No* p_raiz)
 				}
 				
 				else if ((p_raiz->fb == -2) && (p_raiz->p_filho_direito == +1)) { //ROTAÇÂO RL
-					RodarRR(p_raiz);
 					RodarLL(p_raiz);
+					RodarRR(p_raiz);
 				}
-				
-				
 				
 			}
 			
