@@ -157,6 +157,15 @@ void ProcessarPosOrdem (No* p_raiz)
 		}
 }
 
+void ProcessarComFb (No* p_raiz)
+{
+	if(p_raiz != NULL) {
+		ProcessarOrdemSimetrica(p_raiz->p_filho_esquerdo);
+		printf("Chave: %d Fb: %d \n", p_raiz->chave, p_raiz->fb);
+		ProcessarOrdemSimetrica(p_raiz->p_filho_direito);
+	}
+}
+
 int AlturaNo(No* no)
 {
 	if (no == NULL){
