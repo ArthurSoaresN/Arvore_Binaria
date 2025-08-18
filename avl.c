@@ -230,6 +230,45 @@ void RodarLL (No* no_desbalanceado)
 	}
 }
 
+void InserirNo (No* p_raiz, No* chave) 
+{
+	if (p_raiz == NULL) { printf("Arvore Vazia, crie a Raiz para poder inserir");}
+	if (chave == p_raiz->chave) {printf("Chave já existente");}
+	
+	if (chave < p_raiz->chave) { // CHAVE MENOR -> INSERIR A ESQUERDA
+		if (p_raiz->p_filho_esquerdo == NULL) { // SE TIVER ESPAÇO LIVRE NA ESQUERDA
+			// CRIAR NO
+			No* novo_no = (No*) malloc(sizeof(No));
+			novo_no->chave = chave;
+			novo_no->p_filho_esquerdo = NULL;
+			novo_no->p_filho_direito = NULL;
+			novo_no->altura = 0;
+			novo_no->fb = 0;
+			novo_no->p_pai = p_raiz;
+			p_raiz->p_filho_esquerdo = novo_no;
+		}
+		
+		else { // PROCURAR O ESPAÇO LIVRE COM RECURSSIVIDADE
+			 InserirNo(p_raiz->p_filho_esquerdo, chave);
+			}
+		}
+	else {
+		// INSERÇÃO A DIREITA
+		if(p_raiz->p_filho_direito == NULL) {
+			No* novo_no = (No*) malloc(sizeof(No));
+			novo_no->chave = chave;
+			novo_no->p_filho_esquerdo = NULL;
+			novo_no->p_filho_direito = NULL;
+			novo_no->altura = 0;
+			novo_no->fb = 0;
+			novo_no->p_pai = p_raiz;
+			p_raiz->p_filho_esquerdo = novo_no;
+			}
+		else {
+			InserirNo(p_raiz->p_filho_direito, chave);
+			}
+	}
+}
 
 
 
