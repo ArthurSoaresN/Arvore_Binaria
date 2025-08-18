@@ -268,9 +268,11 @@ void VerificarBalanceamento(No* p_raiz)
 					RodarRR(p_raiz);
 				}
 				
+				else {
+				VerificarBalanceamento(p_raiz->p_filho_direito);
+				VerificarBalanceamento(p_raiz->p_filho_esquerdo);
+				}
 			}
-			
-		
 		}
 }
 
@@ -317,6 +319,8 @@ void InserirNo (No* p_raiz, No* chave)
 	}
 	
 	// LOGICA PARA AUTO BALANCEAMENTO
+	
+	VerificarBalanceamento(p_raiz);
 	
 }
 
