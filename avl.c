@@ -160,12 +160,17 @@ void ProcessarPosOrdem (No* p_raiz)
 int AlturaNo(No* no)
 {
 	if (no == NULL){
-		return -1;
+		return 0;
 	}
 	else {
 		return no->altura;
 	}
 }
+
+// altura(p) = 1+max(-1,-1) = 0
+void CalcularAltura(No* no) {
+	no->altura = 1+max(AlturaNo(no->p_filho_direito->altura),(no->p_filho_esquerdo->altura));
+	}
 
 int max(int HE, int HD) {
 	if (HE > HD) {
@@ -176,10 +181,11 @@ int max(int HE, int HD) {
 	}
 }
 
+Fator de Balanceamento = (h_e + 1) - (h_d + 1)
 void CalcularFatorBalanceamento(No* no)
 {
 	if(no == NULL){
-		return NULL
+		continue;
 	}
 	
 	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
@@ -238,6 +244,38 @@ void RodarLL (No* no_desbalanceado)
 		}
 	}
 }
+
+void VerificarBalanceamento(No* p_raiz) 
+{
+	while (p_raiz != NULL) {
+			CalcularFatorBalanceamento(p_raiz);
+			
+			if ( (p_raiz->fb != -1) || (p_raiz->fb != 0) || (p_raiz->fb != 1) ) { // no pivo
+				
+				if ( (p_raiz->fb == 2) && (p_raiz->p_filho_esquerdo == 1) {RodarLL(p_raiz);} // ROTAÇÃO LL
+				
+				else if ((p_raiz->fb == -2) && (p_raiz->p_filho_direito == -1)) {RodarRR(p_raiz);} // ROTAÇÃO RR
+				
+				else if  ((p_raiz->fb == 2) && (p_raiz->p_filho_esquerdo == -1)) { //ROTAÇÂO LR
+					RodarRR(p_raiz);
+					RodarLL(p_raiz);
+				}
+				
+				else if ((p_raiz->fb == -2) && (p_raiz->p_filho_direito == +1)) { //ROTAÇÂO RL
+					RodarRR(p_raiz);
+					RodarLL(p_raiz);
+				}
+				
+				
+				
+			}
+			
+		
+		}
+}
+
+
+
 
 void InserirNo (No* p_raiz, No* chave) 
 {
