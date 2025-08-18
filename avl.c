@@ -181,16 +181,14 @@ int max(int HE, int HD) {
 	}
 }
 
-Fator de Balanceamento = (h_e + 1) - (h_d + 1)
+// Fator de Balanceamento = (h_e + 1) - (h_d + 1)
 void CalcularFatorBalanceamento(No* no)
 {
-	if(no == NULL){
-		continue;
-	}
-	
+	if (no != NULL) {
 	CalcularAltura(no->p_filho_esquerdo);
 	CalcularAltura(no->p_filho_direito);
 	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
+	}
 }
 
 // Quando o nó é inserido na sub-arvore direita 2x acaba desbalanceando a arvore porque a diferença
@@ -321,7 +319,6 @@ void InserirNo (No* p_raiz, No* chave)
 	// LOGICA PARA AUTO BALANCEAMENTO
 	
 	VerificarBalanceamento(p_raiz);
-	
 }
 
 
