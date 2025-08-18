@@ -113,7 +113,7 @@ struct AVL_NO {
 No* criar_arvore(No* p_raiz, int chave, int* p_verificador)
 {
 	if (p_verificador == 1) {
-		printf("Árvore já criada");
+		printf("Arvore já criada\n");
 		return NULL;
 		}
 	
@@ -125,6 +125,7 @@ No* criar_arvore(No* p_raiz, int chave, int* p_verificador)
 		p_raiz->fb = 0; // fb = (h_e + 1) - (h_d + 1)
 		
 		p_verificador = 1; // Raiz Criada
+		printf("Arvore criada! Raiz de chave: %d\n", p_raiz->chave);
 		return p_raiz;
 		}
 }
@@ -197,6 +198,10 @@ void RodarRR (No* no_desbalanceado)
 		if (no_desbalanceado->fb < no_desbalanceado->p_filho_direito && 
 			no_desbalanceado->p_filho_direito < no_desbalanceado->p_filho_direito->p_filho_direito) {
 				
+			if (no_desbalanceado->p_pai != NULL) { // não é a raiz precisar "conectar"
+					no_desbalanceado->p_filho_direito->p_pai = no_desbalanceado->p_pai;
+				}	
+				
 			no_desbalanceado->p_filho_direito->p_filho_esquerdo = no_desbalanceado;
 			no_desbalanceado->p_filho_direito->altura = 1;
 			no_desbalanceado->p_pai = no_desbalanceado->p_filho_direito;
@@ -219,7 +224,11 @@ void RodarLL (No* no_desbalanceado)
 		
 		if (no_desbalanceado->fb > no_desbalanceado->p_filho_esquerdo && 
 			no_desbalanceado->p_filho_esquerdo > no_desbalanceado->p_filho_esquerdo->p_filho_esquerdo) {
-		
+			
+			if (no_desbalanceado->p_pai != NULL) { // não é a raiz precisar "conectar"
+					no_desbalanceado->p_filho_esquerdo->p_pai = no_desbalanceado->p_pai;
+				}
+			
 			no_desbalanceado->p_filho_esquerdo->p_filho_direito = no_desbalanceado;
 			no_desbalanceado->p_filho_esquerdo->altura = 1;
 			no_desbalanceado->p_pai = no_desbalanceado->p_filho_esquerdo
@@ -232,8 +241,8 @@ void RodarLL (No* no_desbalanceado)
 
 void InserirNo (No* p_raiz, No* chave) 
 {
-	if (p_raiz == NULL) { printf("Arvore Vazia, crie a Raiz para poder inserir");}
-	if (chave == p_raiz->chave) {printf("Chave já existente");}
+	if (p_raiz == NULL) { printf("Arvore Vazia, crie a Raiz para poder inserir\n");}
+	if (chave == p_raiz->chave) {printf("Chave já existente\n");}
 	
 	if (chave < p_raiz->chave) { // CHAVE MENOR -> INSERIR A ESQUERDA
 		if (p_raiz->p_filho_esquerdo == NULL) { // SE TIVER ESPAÇO LIVRE NA ESQUERDA
