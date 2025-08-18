@@ -268,6 +268,9 @@ void InserirNo (No* p_raiz, No* chave)
 			InserirNo(p_raiz->p_filho_direito, chave);
 			}
 	}
+	
+	// LOGICA PARA AUTO BALANCEAMENTO
+	
 }
 
 
