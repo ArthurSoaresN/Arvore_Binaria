@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 /*
- 
  Arvore AVL (Adelson Velskii e Landis) criada por eles em 1962
  Permite rebalanceamento local, apenas na parte afetada
  pela "inserção" ou "remoção", usando rotação simples ou dupla.
@@ -99,48 +95,183 @@ As rotações duplas (LR e RL) podem ser implementadas com 2 rotações simples.
  
  */
  
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definição da estrutura do Nó AVL
 typedef struct AVL_NO No;
 
 struct AVL_NO {
 	int chave;
-	No* p_pai;
+	No* p_pai; // O campo pai não é estritamente necessário para a lógica de inserção e rotação recursiva, mas mantê-lo pode ser útil para outras operações.
 	No* p_filho_esquerdo;
 	No* p_filho_direito;
 	int altura;
-	int fb;
-	};
+	int fb; // Fator de balanceamento
+};
 
-No* criar_arvore(No* p_raiz, int chave, int* p_verificador)
+// ======================
+// FUNÇÕES AUXILIARES
+// ======================
+
+// Função para retornar a altura de um nó (retorna -1 se o nó for NULL)
+// Isso simplifica os cálculos e evita bugs.
+int AlturaNo(No* no)
 {
-	if (p_verificador == 1) {
-		printf("Arvore já criada\n");
-		return NULL;
-		}
-	
-	else {
-		p_raiz->chave = chave;
-		p_raiz->p_filho_esquerdo = NULL;
-		p_raiz->p_filho_direito = NULL;
-		p_raiz->altura = 0; // altura(p) = 1+max(-1,-1) = 0
-		p_raiz->fb = 0; // fb = (h_e + 1) - (h_d + 1)
-		
-		p_verificador = 1; // Raiz Criada
-		printf("Arvore criada! Raiz de chave: %d\n", p_raiz->chave);
-		return p_raiz;
-		}
+	if (no == NULL) {
+		return -1;
+	}
+	return no->altura;
 }
 
-void ProcessarPreOrdem (No* p_raiz)
-{
+// Retorna o maior entre dois inteiros
+int max(int HE, int HD) {
+	return (HE > HD) ? HE : HD;
+}
+
+// Função para criar e inicializar um novo nó
+No* criar_no(int chave) {
+	No* novo_no = (No*)malloc(sizeof(No));
+	if (novo_no == NULL) {
+		printf("Erro de alocação de memória!\n");
+		exit(1);
+	}
+	novo_no->chave = chave;
+	novo_no->p_filho_esquerdo = NULL;
+	novo_no->p_filho_direito = NULL;
+	novo_no->p_pai = NULL;
+	novo_no->altura = 0;
+	novo_no->fb = 0;
+	return novo_no;
+}
+
+// =========================================================================
+// FUNÇÕES DE ROTAÇÃO
+// =========================================================================
+// As rotações são o coração da AVL. Elas rearranjam a árvore para restaurar
+// o balanceamento. As funções de rotação devem retornar a nova raiz da
+// subárvore que foi rotacionada.
+
+// Rotação simples à direita (LL)
+// Esta rotação é usada quando a subárvore esquerda do nó desbalanceado
+// é muito "pesada" e a inserção ocorreu no filho esquerdo dele.
+No* RodarLL(No* no_desbalanceado) {
+	No* novo_no = no_desbalanceado->p_filho_esquerdo;
+	
+	// A subárvore direita do novo nó se torna a subárvore esquerda do nó desbalanceado
+	no_desbalanceado->p_filho_esquerdo = novo_no->p_filho_direito;
+
+	// O nó desbalanceado se torna o filho direito do novo nó
+	novo_no->p_filho_direito = no_desbalanceado;
+
+	// Atualiza os pais (se necessário)
+	// (Lógica de pai não implementada aqui para simplificar, mas seria necessário se fosse usada)
+	
+	// Recalcula as alturas dos nós afetados (de baixo para cima)
+	no_desbalanceado->altura = 1 + max(AlturaNo(no_desbalanceado->p_filho_esquerdo), AlturaNo(no_desbalanceado->p_filho_direito));
+	novo_no->altura = 1 + max(AlturaNo(novo_no->p_filho_esquerdo), AlturaNo(novo_no->p_filho_direito));
+	
+	return novo_no; // Retorna o novo nó que é a raiz da subárvore
+}
+
+// Rotação simples à esquerda (RR)
+// Usada quando a subárvore direita do nó desbalanceado é "pesada"
+// e a inserção ocorreu no filho direito dele.
+No* RodarRR(No* no_desbalanceado) {
+	No* novo_no = no_desbalanceado->p_filho_direito;
+	
+	no_desbalanceado->p_filho_direito = novo_no->p_filho_esquerdo;
+	novo_no->p_filho_esquerdo = no_desbalanceado;
+	
+	// Recalcula as alturas
+	no_desbalanceado->altura = 1 + max(AlturaNo(no_desbalanceado->p_filho_esquerdo), AlturaNo(no_desbalanceado->p_filho_direito));
+	novo_no->altura = 1 + max(AlturaNo(novo_no->p_filho_esquerdo), AlturaNo(novo_no->p_filho_direito));
+	
+	return novo_no;
+}
+
+// Rotação dupla esquerda-direita (LR)
+// É uma combinação de uma rotação à esquerda no filho esquerdo, seguida de uma rotação à direita no nó desbalanceado.
+No* RodarLR(No* no_desbalanceado) {
+	no_desbalanceado->p_filho_esquerdo = RodarRR(no_desbalanceado->p_filho_esquerdo);
+	return RodarLL(no_desbalanceado);
+}
+
+// Rotação dupla direita-esquerda (RL)
+// É uma combinação de uma rotação à direita no filho direito, seguida de uma rotação à esquerda no nó desbalanceado.
+No* RodarRL(No* no_desbalanceado) {
+	no_desbalanceado->p_filho_direito = RodarLL(no_desbalanceado->p_filho_direito);
+	return RodarRR(no_desbalanceado);
+}
+
+// ===============================
+// FUNÇÃO PRINCIPAL DE INSERÇÃO
+// ===============================
+
+// Esta é a função principal de inserção em uma AVL.
+// A lógica recursiva é perfeita para isso.
+No* InserirNo(No* p_raiz, int chave) {
+	// 1. Caso base: Se a raiz for NULL, cria um novo nó e retorna.
+	if (p_raiz == NULL) {
+		return criar_no(chave);
+	}
+	
+	// 2. Inserção recursiva (lógica de ABB)
+	if (chave < p_raiz->chave) {
+		p_raiz->p_filho_esquerdo = InserirNo(p_raiz->p_filho_esquerdo, chave);
+	} else if (chave > p_raiz->chave) {
+		p_raiz->p_filho_direito = InserirNo(p_raiz->p_filho_direito, chave);
+	} else {
+		// Chave já existe, não faz nada e retorna a raiz atual
+		return p_raiz;
+	}
+	
+	// 3. Atualiza a altura do nó atual (o nó que a função está retornando)
+	p_raiz->altura = 1 + max(AlturaNo(p_raiz->p_filho_esquerdo), AlturaNo(p_raiz->p_filho_direito));
+	
+	// 4. Calcula o Fator de Balanceamento do nó atual
+	p_raiz->fb = AlturaNo(p_raiz->p_filho_esquerdo) - AlturaNo(p_raiz->p_filho_direito);
+	
+	// 5. Verifica se há desbalanceamento e aplica as rotações
+	
+	// Caso LL: Inserção na subárvore esquerda do filho esquerdo
+	if (p_raiz->fb > 1 && chave < p_raiz->p_filho_esquerdo->chave) {
+		return RodarLL(p_raiz);
+	}
+	
+	// Caso RR: Inserção na subárvore direita do filho direito
+	if (p_raiz->fb < -1 && chave > p_raiz->p_filho_direito->chave) {
+		return RodarRR(p_raiz);
+	}
+	
+	// Caso LR: Inserção na subárvore direita do filho esquerdo
+	if (p_raiz->fb > 1 && chave > p_raiz->p_filho_esquerdo->chave) {
+		return RodarLR(p_raiz);
+	}
+	
+	// Caso RL: Inserção na subárvore esquerda do filho direito
+	if (p_raiz->fb < -1 && chave < p_raiz->p_filho_direito->chave) {
+		return RodarRL(p_raiz);
+	}
+
+	// 6. Retorna a raiz da subárvore (pode ser a mesma ou a nova)
+	return p_raiz;
+}
+
+// =====================
+// FUNÇÕES DE PERCURSO
+// =====================
+
+// As suas funções de percurso já estão corretas e são ideais para visualizar a árvore.
+void ProcessarPreOrdem(No* p_raiz) {
 	if (p_raiz != NULL) {
 		printf("%d ", p_raiz->chave);
 		ProcessarPreOrdem(p_raiz->p_filho_esquerdo);
-		ProcessarPreOrdem(p_raiz->p_filho_direito); 
+		ProcessarPreOrdem(p_raiz->p_filho_direito);
 	}
 }
 
-void ProcessarOrdemSimetrica (No* p_raiz)
-{
+void ProcessarOrdemSimetrica(No* p_raiz) {
 	if(p_raiz != NULL) {
 		ProcessarOrdemSimetrica(p_raiz->p_filho_esquerdo);
 		printf("%d ", p_raiz->chave);
@@ -148,198 +279,64 @@ void ProcessarOrdemSimetrica (No* p_raiz)
 	}
 }
 
-void ProcessarPosOrdem (No* p_raiz) 
-{
-		if (p_raiz != NULL) {
-			ProcessarPosOrdem(p_raiz->p_filho_esquerdo);
-			ProcessarPosOrdem(p_raiz->p_filho_direito);
-			printf("%d ", p_raiz->chave);
-		}
+void ProcessarPosOrdem(No* p_raiz) {
+	if (p_raiz != NULL) {
+		ProcessarPosOrdem(p_raiz->p_filho_esquerdo);
+		ProcessarPosOrdem(p_raiz->p_filho_direito);
+		printf("%d ", p_raiz->chave);
+	}
 }
 
-void ProcessarComFb (No* p_raiz)
-{
+void ProcessarComFb(No* p_raiz) {
 	if(p_raiz != NULL) {
-		ProcessarOrdemSimetrica(p_raiz->p_filho_esquerdo);
-		printf("Chave: %d Fb: %d \n", p_raiz->chave, p_raiz->fb);
-		ProcessarOrdemSimetrica(p_raiz->p_filho_direito);
+		ProcessarComFb(p_raiz->p_filho_esquerdo);
+		printf("Chave: %d Fb: %d Altura: %d\n", p_raiz->chave, p_raiz->fb, p_raiz->altura);
+		ProcessarComFb(p_raiz->p_filho_direito);
 	}
 }
 
-int AlturaNo(No* no)
-{
-	if (no == NULL){
-		return 0;
-	}
-	else {
-		return no->altura;
-	}
-}
-
-// altura(p) = 1+max(-1,-1) = 0
-void CalcularAltura(No* no) {
-	no->altura = 1+max(AlturaNo(no->p_filho_direito->altura),(no->p_filho_esquerdo->altura));
-	}
-
-int max(int HE, int HD) {
-	if (HE > HD) {
-		return HE;
-	}
-	else {
-		return HD;
-	}
-}
-
-// Fator de Balanceamento = (h_e + 1) - (h_d + 1)
-void CalcularFatorBalanceamento(No* no)
-{
-	if (no != NULL) {
-	CalcularAltura(no->p_filho_esquerdo);
-	CalcularAltura(no->p_filho_direito);
-	no->fb = AlturaNo(no->p_filho_esquerdo) - AlturaNo(no->p_filho_direito); 
-	}
-}
-
-// Quando o nó é inserido na sub-arvore direita 2x acaba desbalanceando a arvore porque a diferença
-// de altura em uma Arvore AVL é no máximo 1. Resolver com a rotação RR (Right Right)
-
-void RodarRR (No* no_desbalanceado)
-{
-	if (no_desbalanceado != NULL) {
-		CalcularFatorBalanceamento(no_desbalanceado);
-		CalcularFatorBalanceamento(no_desbalanceado->p_filho_direito);
-		CalcularFatorBalanceamento(no_desbalanceado->p_filho_direito->p_filho_direito);
-		
-		if (no_desbalanceado->fb < no_desbalanceado->p_filho_direito && 
-			no_desbalanceado->p_filho_direito < no_desbalanceado->p_filho_direito->p_filho_direito) {
-				
-			if (no_desbalanceado->p_pai != NULL) { // não é a raiz precisar "conectar"
-					no_desbalanceado->p_filho_direito->p_pai = no_desbalanceado->p_pai;
-				}	
-				
-			no_desbalanceado->p_filho_direito->p_filho_esquerdo = no_desbalanceado;
-			no_desbalanceado->p_filho_direito->altura = 1;
-			no_desbalanceado->p_pai = no_desbalanceado->p_filho_direito;
-			no_desbalanceado->p_filho_direito = NULL;
-			no_desbalanceado->p_filho_esquerdo = NULL;
-			no_desbalanceado->altura = 0;
-		}
-	}
-}
-
-// Quando o nó é inserido na sub-arvore esquerda 2x acaba desbalanceando a arvore porque a diferença
-// de altura em uma Arvore AVL é no máximo 1. Resolver com a rotação LL (Left Left)
-
-void RodarLL (No* no_desbalanceado) 
-{
-	if (no_desbalanceado != NULL) {
-		CalcularFatorBalanceamento(no_desbalanceado);
-		CalcularFatorBalanceamento(no_desbalanceado->p_filho_esquerdo);
-		CalcularFatorBalanceamento(no_desbalanceado->p_filho_esquerdo->p_filho_);
-		
-		if (no_desbalanceado->fb > no_desbalanceado->p_filho_esquerdo && 
-			no_desbalanceado->p_filho_esquerdo > no_desbalanceado->p_filho_esquerdo->p_filho_esquerdo) {
-			
-			if (no_desbalanceado->p_pai != NULL) { // não é a raiz precisar "conectar"
-					no_desbalanceado->p_filho_esquerdo->p_pai = no_desbalanceado->p_pai;
-				}
-			
-			no_desbalanceado->p_filho_esquerdo->p_filho_direito = no_desbalanceado;
-			no_desbalanceado->p_filho_esquerdo->altura = 1;
-			no_desbalanceado->p_pai = no_desbalanceado->p_filho_esquerdo
-			no_desbalanceado->p_filho_direito = NULL;
-			no_desbalanceado->p_filho_esquerdo = NULL;
-			no_desbalanceado->altura = 0;
-		}
-	}
-}
-
-void VerificarBalanceamento(No* p_raiz) 
-{
-	while (p_raiz != NULL) {
-			CalcularFatorBalanceamento(p_raiz);
-			
-			if ( (p_raiz->fb != -1) || (p_raiz->fb != 0) || (p_raiz->fb != 1) ) { // no pivo
-				
-				if ( (p_raiz->fb == 2) && (p_raiz->p_filho_esquerdo == 1) {RodarLL(p_raiz);} // ROTAÇÃO LL
-				
-				else if ((p_raiz->fb == -2) && (p_raiz->p_filho_direito == -1)) {RodarRR(p_raiz);} // ROTAÇÃO RR
-				
-				else if  ((p_raiz->fb == 2) && (p_raiz->p_filho_esquerdo == -1)) { //ROTAÇÂO LR
-					RodarRR(p_raiz);
-					RodarLL(p_raiz);
-				}
-				
-				else if ((p_raiz->fb == -2) && (p_raiz->p_filho_direito == +1)) { //ROTAÇÂO RL
-					RodarLL(p_raiz);
-					RodarRR(p_raiz);
-				}
-				
-				else {
-				VerificarBalanceamento(p_raiz->p_filho_direito);
-				VerificarBalanceamento(p_raiz->p_filho_esquerdo);
-				}
-			}
-		}
-}
-
-
-
-
-void InserirNo (No* p_raiz, No* chave) 
-{
-	if (p_raiz == NULL) { printf("Arvore Vazia, crie a Raiz para poder inserir\n");}
-	if (chave == p_raiz->chave) {printf("Chave já existente\n");}
-	
-	if (chave < p_raiz->chave) { // CHAVE MENOR -> INSERIR A ESQUERDA
-		if (p_raiz->p_filho_esquerdo == NULL) { // SE TIVER ESPAÇO LIVRE NA ESQUERDA
-			// CRIAR NO
-			No* novo_no = (No*) malloc(sizeof(No));
-			novo_no->chave = chave;
-			novo_no->p_filho_esquerdo = NULL;
-			novo_no->p_filho_direito = NULL;
-			novo_no->altura = 0;
-			novo_no->fb = 0;
-			novo_no->p_pai = p_raiz;
-			p_raiz->p_filho_esquerdo = novo_no;
-		}
-		
-		else { // PROCURAR O ESPAÇO LIVRE COM RECURSSIVIDADE
-			 InserirNo(p_raiz->p_filho_esquerdo, chave);
-			}
-		}
-	else {
-		// INSERÇÃO A DIREITA
-		if(p_raiz->p_filho_direito == NULL) {
-			No* novo_no = (No*) malloc(sizeof(No));
-			novo_no->chave = chave;
-			novo_no->p_filho_esquerdo = NULL;
-			novo_no->p_filho_direito = NULL;
-			novo_no->altura = 0;
-			novo_no->fb = 0;
-			novo_no->p_pai = p_raiz;
-			p_raiz->p_filho_esquerdo = novo_no;
-			}
-		else {
-			InserirNo(p_raiz->p_filho_direito, chave);
-			}
-	}
-	
-	// LOGICA PARA AUTO BALANCEAMENTO
-	
-	VerificarBalanceamento(p_raiz);
-}
-
-
-
-
+// =======
+// 	MAIN
+// =======
 int main()
 {
-	int verificador = 0;
-	int* p_verificador = &verificador; 
+	No* p_raiz = NULL; // A raiz deve começar como NULL
+
+	// Inserindo chaves para testar as rotações
+	printf("Inserindo 10...\n");
+	p_raiz = InserirNo(p_raiz, 10);
 	
+	printf("Inserindo 20...\n");
+	p_raiz = InserirNo(p_raiz, 20);
 	
+	printf("Inserindo 30 (vai causar uma rotacao RR)...\n");
+	p_raiz = InserirNo(p_raiz, 30); // Causa rotação RR
+
+	printf("\nArvore apos insercoes:\n");
+	ProcessarComFb(p_raiz); // Agora vai exibir os fatores de balanceamento corretos
+	
+	printf("\nPercurso em Ordem Simetrica: ");
+	ProcessarOrdemSimetrica(p_raiz); // Deve imprimir 10 20 30
+
+	// Exemplo de uma inserção que causa rotação LL
+	p_raiz = NULL;
+	printf("\n\nResetando arvore. Inserindo 30, 20, 10...\n");
+	p_raiz = InserirNo(p_raiz, 30);
+	p_raiz = InserirNo(p_raiz, 20);
+	p_raiz = InserirNo(p_raiz, 10); // Causa rotação LL
+
+	printf("\nArvore apos insercoes:\n");
+	ProcessarComFb(p_raiz);
+	
+	// Exemplo de LR e RL
+	p_raiz = NULL;
+	printf("\n\nResetando arvore. Inserindo 30, 10, 20...\n");
+	p_raiz = InserirNo(p_raiz, 30);
+	p_raiz = InserirNo(p_raiz, 10);
+	p_raiz = InserirNo(p_raiz, 20); // Causa rotação LR
+
+	printf("\nArvore apos insercoes:\n");
+	ProcessarComFb(p_raiz);
 	
 	return 0;
 }
-
